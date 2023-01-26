@@ -2,8 +2,12 @@ package net.krlite.taptab;
 
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
+import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.krlite.equator.util.Timer;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.option.KeyBinding;
+import net.minecraft.client.util.InputUtil;
+import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -12,12 +16,19 @@ public class TapTabClient implements ClientModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 	public static final int TAB_DELAY = 400, ANIMATION_DURATION = 375, ANIMATION_AMOUNT = 9, ANIMATION_DELAY = 15;
 
-	public static class KeyBinds {
+	public static final KeyBinding CYCLE = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+			"key.taptab.cycle",
+			InputUtil.Type.KEYSYM,
+			GLFW.GLFW_KEY_TAB,
+			"key.taptab.category"
+	));
+
+	public static class Input {
 		private static final Timer lastPressed = new Timer(TAB_DELAY);
 
 		static void listenInput(MinecraftClient client) {
 			if (client.player == null) return;
-			if (client.options.playerListKey.wasPressed()) {
+			if (CYCLE.wasPressed()) {
 				if (lastPressed.isPresent()) {
 					lastPressed.reset();
 					if (client.options.sneakKey.isPressed())
@@ -30,6 +41,6 @@ public class TapTabClient implements ClientModInitializer {
 
 	@Override
 	public void onInitializeClient() {
-		ClientTickEvents.END_CLIENT_TICK.register(KeyBinds::listenInput);
+		ClientTickEvents.END_CLIENT_TICK.register(Input::listenInput);
 	}
 }
