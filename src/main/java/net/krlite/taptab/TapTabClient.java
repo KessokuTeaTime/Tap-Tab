@@ -10,7 +10,7 @@ import org.slf4j.LoggerFactory;
 public class TapTabClient implements ClientModInitializer {
 	public static final String MOD_ID = "taptab";
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-	public static final int TAB_DELAY = 400, ANIMATION_DURATION = 375, ANIMATION_AMOUNT = 9, ANIMATION_DELAY = 45;
+	public static final int TAB_DELAY = 400, ANIMATION_DURATION = 375, ANIMATION_AMOUNT = 9, ANIMATION_DELAY = 15;
 
 	public static class KeyBinds {
 		private static final Timer lastPressed = new Timer(TAB_DELAY);

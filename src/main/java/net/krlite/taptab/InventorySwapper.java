@@ -6,7 +6,6 @@ import net.krlite.equator.util.SystemClock;
 import net.krlite.taptab.networking.TapTabNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import org.jetbrains.annotations.Range;
 
@@ -25,8 +24,8 @@ public class InventorySwapper {
 		if (slot1 == slot2 || MinecraftClient.getInstance().player == null) return;
 		PlayerInventory inv = MinecraftClient.getInstance().player.getInventory();
 		ClientPlayNetworking.send(TapTabNetworking.PLAYER_INVENTORY_SWAP_SLOTS, new PacketByteBuf(Unpooled.buffer().writeInt(slot1).writeInt(slot2)));
-		if (slot1 < 9) HOTBAR_SLOTS_ANIMATION_START[slot1] = SystemClock.queueElapsed() + getAnimationDelay(slot1);
-		if (slot2 < 9) HOTBAR_SLOTS_ANIMATION_START[slot2] = SystemClock.queueElapsed() + getAnimationDelay(slot2);
+		if (slot1 < 9) InventorySwapper.HOTBAR_SLOTS_ANIMATION_START[slot1] = SystemClock.queueElapsed() + (long) Math.abs(inv.selectedSlot - slot1) * TapTabClient.ANIMATION_DELAY;
+		if (slot2 < 9) InventorySwapper.HOTBAR_SLOTS_ANIMATION_START[slot2] = SystemClock.queueElapsed() + (long) Math.abs(inv.selectedSlot - slot2) * TapTabClient.ANIMATION_DELAY;
 	}
 
 	protected static void swapLine(@Range(from = 0, to = 3) int line1, @Range(from = 0, to = 3) int line2) {
@@ -47,22 +46,5 @@ public class InventorySwapper {
 		swapLine(BOTTOM_LINE, HOTBAR);
 		swapLine(BOTTOM_LINE, MIDDLE_LINE);
 		swapLine(BOTTOM_LINE, TOP_LINE);
-	}
-
-	private static long getAnimationDelay(int slot) {
-		assert MinecraftClient.getInstance().player != null;
-		int selectedSlot = MinecraftClient.getInstance().player.getInventory().selectedSlot;
-		long delay = 0;
-		if (slot < selectedSlot) {
-			for (int i = slot; i < selectedSlot; i++)
-				if (!MinecraftClient.getInstance().player.getInventory().getStack(i).isEmpty())
-					delay += TapTabClient.ANIMATION_DELAY;
-		}
-		else if (slot > selectedSlot) {
-			for (int i = selectedSlot; i < slot; i++)
-				if (!MinecraftClient.getInstance().player.getInventory().getStack(i).isEmpty())
-					delay += TapTabClient.ANIMATION_DELAY;
-		}
-		return delay;
 	}
 }
