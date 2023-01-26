@@ -1,5 +1,3 @@
-# Tap Tab
+### <p align=right>[Main Branch `←`](https://github.com/KrLite/Tap-Tab)&emsp;[`→` Modrinth](https://modrinth.com/mod/taptab)</p>
 
-## License
-
-This repository is available under the **[GNU Public License.](LICENSE)**
+# Branch for Tap Tab on Minecraft `1.18.2`
