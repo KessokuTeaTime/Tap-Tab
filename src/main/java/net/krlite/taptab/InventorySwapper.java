@@ -44,8 +44,8 @@ public class InventorySwapper {
 	}
 
 	public static void swapToPrevLine() {
-		swapLine(BOTTOM_LINE, HOTBAR);
-		swapLine(BOTTOM_LINE, MIDDLE_LINE);
-		swapLine(BOTTOM_LINE, TOP_LINE);
+		swapLine(HOTBAR, BOTTOM_LINE);
+		swapLine(HOTBAR, MIDDLE_LINE);
+		swapLine(HOTBAR, TOP_LINE);
 	}
 }
