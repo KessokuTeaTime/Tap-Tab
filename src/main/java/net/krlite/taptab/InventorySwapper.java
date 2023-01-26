@@ -6,7 +6,6 @@ import net.krlite.equator.util.SystemClock;
 import net.krlite.taptab.networking.TapTabNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerInventory;
-import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import org.jetbrains.annotations.Range;
 
