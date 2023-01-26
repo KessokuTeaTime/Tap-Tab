@@ -1,29 +1,29 @@
 {
   "schemaVersion": 1,
-  "id": "modid",
+  "id": "taptab",
   "version": "${version}",
 
-  "name": "Example Mod",
+  "name": "Tap Tab",
   "description": "",
   "authors": [
     "KrLite"
   ],
   "contact": {
     "homepage": "https://github.com/KrLite",
-    "sources": "https://github.com/KrLite/Example-Mod"
+    "sources": "https://github.com/KrLite/Tap-Tab"
   },
 
   "license": "GPL-3.0",
-  "icon": "assets/modid/icon.png",
+  "icon": "assets/taptab/icon.png",
 
   "environment": "*",
   "entrypoints": {
     "main": [
-      "net.krlite.modid.ExampleMod"
+      "net.krlite.taptab.ExampleMod"
     ]
   },
   "mixins": [
-    "modid.mixins.json"
+    "taptab.mixins.json"
   ],
 
   "depends": {
