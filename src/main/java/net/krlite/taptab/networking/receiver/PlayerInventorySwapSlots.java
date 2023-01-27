@@ -7,7 +7,7 @@ import net.krlite.equator.util.SystemClock;
 import net.krlite.taptab.InventorySwapper;
 import net.krlite.taptab.TapTabClient;
 import net.minecraft.client.MinecraftClient;
-import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
@@ -45,7 +45,24 @@ public class PlayerInventorySwapSlots implements ServerPlayNetworking.PlayChanne
 		int slot1 = buf.retain().readInt(), slot2 = buf.retain().readInt();
 		ItemStack stack1 = player.getInventory().getStack(slot1), stack2 = player.getInventory().getStack(slot2);
 		if (stack1.isEmpty() && stack2.isEmpty() || stack1 == stack2) return;
-		player.getInventory().setStack(slot1, stack2);
-		player.getInventory().setStack(slot2, stack1);
+		PlayerInventory inv = player.getInventory();
+		inv.setStack(slot1, stack2);
+		inv.setStack(slot2, stack1);
+		if (slot1 < 9 && !stack2.isEmpty()) InventorySwapper.HOTBAR_SLOTS_ANIMATION_START[slot1] = getAnimationStart(inv, slot1);
+		if (slot2 < 9 && !stack1.isEmpty()) InventorySwapper.HOTBAR_SLOTS_ANIMATION_START[slot2] = getAnimationStart(inv, slot2);
+	}
+
+	private long getAnimationStart(PlayerInventory inv, int slot) {
+		long start = 0;
+		if (inv.selectedSlot < slot) {
+			for (int i = inv.selectedSlot; i < slot; i++) {
+				if (!inv.getStack(i).isEmpty()) start++;
+			}
+		} else if (inv.selectedSlot > slot) {
+			for (int i = slot; i < inv.selectedSlot; i++) {
+				if (!inv.getStack(i).isEmpty()) start++;
+			}
+		}
+		return SystemClock.queueElapsed() + start * TapTabClient.ANIMATION_DELAY;
 	}
 }

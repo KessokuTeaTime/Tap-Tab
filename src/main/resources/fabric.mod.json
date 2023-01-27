@@ -4,7 +4,7 @@
   "version": "${version}",
 
   "name": "Tap Tab",
-  "description": "Double-Tap Tab and Cycle Through Your Inventory!",
+  "description": "Double-Tap Tab and Cycle Your Hotbar Through Inventory!",
   "authors": [
     "KrLite"
   ],
