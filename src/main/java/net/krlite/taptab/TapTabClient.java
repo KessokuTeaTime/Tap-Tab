@@ -11,6 +11,7 @@ import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
+
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,5 +58,6 @@ public class TapTabClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		ClientTickEvents.END_CLIENT_TICK.register(Input::listenInput);
 		Sounds.register();
+
 	}
 }
