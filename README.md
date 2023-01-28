@@ -1,3 +1,5 @@
+### <p align=right>[`→` Modrinth](https://modrinth.com/mod/taptab)</p>
+
 # Tap Tab
 
 **Tap Tab** allows player to cycle the hotbar through inventory. Double-tap the `⇥ Tab` key and see what happens!
