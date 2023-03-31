@@ -2,11 +2,9 @@ package net.krlite.taptab;
 
 import io.netty.buffer.Unpooled;
 import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.krlite.equator.util.SystemClock;
 import net.krlite.taptab.networking.TapTabNetworking;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.sound.PositionedSoundInstance;
-import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.network.PacketByteBuf;
 import org.jetbrains.annotations.Range;
 
@@ -14,7 +12,6 @@ import java.util.Arrays;
 
 public class InventorySwapper {
 	public static final int HOTBAR = 0, TOP_LINE = 1, MIDDLE_LINE = 2, BOTTOM_LINE = 3;
-
 	public static final long[] HOTBAR_SLOTS_ANIMATION_START = new long[9];
 	public static final boolean[] HOTBAR_SLOTS_ANIMATION_REVERSED = new boolean[9];
 

@@ -3,10 +3,8 @@ package net.krlite.taptab.networking.receiver;
 import io.netty.channel.EventLoop;
 import net.fabricmc.fabric.api.networking.v1.PacketSender;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.krlite.equator.util.SystemClock;
 import net.krlite.taptab.InventorySwapper;
 import net.krlite.taptab.TapTabClient;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
 import net.minecraft.network.PacketByteBuf;
@@ -63,6 +61,6 @@ public class PlayerInventorySwapSlots implements ServerPlayNetworking.PlayChanne
 				if (!inv.getStack(i).isEmpty()) start++;
 			}
 		}
-		return SystemClock.queueElapsed() + start * TapTabClient.ANIMATION_DELAY;
+		return System.currentTimeMillis() + start * TapTabClient.ANIMATION_DELAY;
 	}
 }

@@ -3,7 +3,6 @@ package net.krlite.taptab;
 import net.fabricmc.api.ClientModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
-import net.krlite.equator.util.Timer;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
@@ -28,17 +27,17 @@ public class TapTabClient implements ClientModInitializer {
 	));
 
 	public static class Input {
-		private static final Timer lastPressed = new Timer(TAB_DELAY);
+		private static long lastPressed;
 
 		static void listenInput(MinecraftClient client) {
 			if (client.player == null) return;
 			if (CYCLE.wasPressed()) {
-				if (lastPressed.isPresent()) {
-					lastPressed.reset();
+				if (System.currentTimeMillis() - lastPressed < TAB_DELAY) {
 					if (client.options.sneakKey.isPressed())
 						InventorySwapper.swapToPrevLine();
 					else InventorySwapper.swapToNextLine();
-				} else lastPressed.reset();
+				}
+				lastPressed = System.currentTimeMillis();
 			}
 		}
 	}
@@ -57,5 +56,24 @@ public class TapTabClient implements ClientModInitializer {
 	public void onInitializeClient() {
 		ClientTickEvents.END_CLIENT_TICK.register(Input::listenInput);
 		Sounds.register();
+	}
+
+	private static double easeOutBounceProgress(double progress) {
+		if (progress < 1 / 2.75) {
+			return 7.5625 * progress * progress;
+		} else if (progress < 2 / 2.75) {
+			progress -= 1.5 / 2.75;
+			return 7.5625 * progress * progress + 0.75;
+		} else if (progress < 2.5 / 2.75) {
+			progress -= 2.25 / 2.75;
+			return 7.5625 * progress * progress + 0.9375;
+		} else {
+			progress -= 2.625 / 2.75;
+			return 7.5625 * progress * progress + 0.984375;
+		}
+	}
+
+	public static double easeOutBounce(double progress, boolean reversed) {
+		return (easeOutBounceProgress(progress) - 1) * (reversed ? -1 : 1) * ANIMATION_AMOUNT;
 	}
 }
