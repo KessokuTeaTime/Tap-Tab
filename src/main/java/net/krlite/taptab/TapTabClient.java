@@ -15,8 +15,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class TapTabClient implements ClientModInitializer {
-	public static final String MOD_ID = "taptab";
-	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
+	public static final String NAME = "Tap Tab", ID = "taptab";
+	public static final Logger LOGGER = LoggerFactory.getLogger(ID);
 	public static final int TAB_DELAY = 400, ANIMATION_DURATION = 375, ANIMATION_AMOUNT = 35, ANIMATION_DELAY = 15;
 
 	public static final KeyBinding CYCLE = KeyBindingHelper.registerKeyBinding(new KeyBinding(
@@ -43,8 +43,8 @@ public class TapTabClient implements ClientModInitializer {
 	}
 
 	public static class Sounds {
-		public static SoundEvent SWAP_PREV = SoundEvent.of(new Identifier(MOD_ID, "swap_next"));
-		public static SoundEvent SWAP_NEXT = SoundEvent.of(new Identifier(MOD_ID, "swap_prev"));
+		public static SoundEvent SWAP_PREV = SoundEvent.of(new Identifier(ID, "swap_next"));
+		public static SoundEvent SWAP_NEXT = SoundEvent.of(new Identifier(ID, "swap_prev"));
 
 		static void register() {
 			Registry.register(Registries.SOUND_EVENT, SWAP_PREV.getId(), SWAP_PREV);
