@@ -22,13 +22,13 @@ public abstract class InGameHudAnimator {
 			)
 	)
 	private void renderHotbarItem(Args args /* MatrixStack *, int x, int y, float tickDelta, PlayerEntity *, ItemStack *, int seed */ ) {
-		int x = args.get(1), y = args.get(2), slot = (x - 2 + 90 - scaledWidth / 2) / 20;
+		int x = args.get(2), y = args.get(3), slot = (x - 2 + 90 - scaledWidth / 2) / 20;
 		long start = InventorySwapper.HOTBAR_SLOTS_ANIMATION_START[slot];
 		double progress = (double) Math.max((System.currentTimeMillis() - start), 0) / TapTabClient.ANIMATION_DURATION;
 
 		if (start == -1 || progress > 1) return;
 
 		boolean reversed = InventorySwapper.HOTBAR_SLOTS_ANIMATION_REVERSED[slot];
-		args.set(2, y + (int) TapTabClient.easeOutBounce(progress, reversed));
+		args.set(3, y + (int) TapTabClient.easeOutBounce(progress, reversed));
 	}
 }
