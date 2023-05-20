@@ -6,10 +6,9 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,12 +42,12 @@ public class TapTabClient implements ClientModInitializer {
 	}
 
 	public static class Sounds {
-		public static SoundEvent SWAP_PREV = SoundEvent.of(new Identifier(ID, "swap_next"));
-		public static SoundEvent SWAP_NEXT = SoundEvent.of(new Identifier(ID, "swap_prev"));
+		public static SoundEvent SWAP_PREV = new SoundEvent(new Identifier(ID, "swap_next"));
+		public static SoundEvent SWAP_NEXT = new SoundEvent(new Identifier(ID, "swap_prev"));
 
 		static void register() {
-			Registry.register(Registries.SOUND_EVENT, SWAP_PREV.getId(), SWAP_PREV);
-			Registry.register(Registries.SOUND_EVENT, SWAP_NEXT.getId(), SWAP_NEXT);
+			Registry.register(Registry.SOUND_EVENT, SWAP_PREV.getId(), SWAP_PREV);
+			Registry.register(Registry.SOUND_EVENT, SWAP_NEXT.getId(), SWAP_NEXT);
 		}
 	}
 
