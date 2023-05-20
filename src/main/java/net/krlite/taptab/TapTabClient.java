@@ -32,7 +32,7 @@ public class TapTabClient implements ClientModInitializer {
 			if (client.player == null) return;
 			if (CYCLE.wasPressed()) {
 				if (System.currentTimeMillis() - lastPressed < TAB_DELAY) {
-					if (client.options.sneakKey.isPressed())
+					if (client.options.keySneak.isPressed())
 						InventorySwapper.swapToPrevLine();
 					else InventorySwapper.swapToNextLine();
 				}
