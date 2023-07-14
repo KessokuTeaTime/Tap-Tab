@@ -21,7 +21,7 @@ public class InventorySwapper {
 		Arrays.fill(HOTBAR_SLOTS_ANIMATION_REVERSED, false);
 	}
 
-	protected static void swapSlot(@Range(from = 0, to = 35) int slot1, @Range(from = 0, to = 35) int slot2) {
+	private static void swapSlot(@Range(from = 0, to = 35) int slot1, @Range(from = 0, to = 35) int slot2) {
 		IntegratedServer server = MinecraftClient.getInstance().getServer();
 		ClientPlayerEntity clientPlayer = MinecraftClient.getInstance().player;
 		if (server == null || clientPlayer == null) return;
