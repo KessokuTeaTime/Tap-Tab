@@ -6,10 +6,9 @@ import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
-import net.minecraft.registry.Registries;
-import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvent;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.registry.Registry;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +32,7 @@ public class TapTab implements ModInitializer {
 			if (client.player == null) return;
 			if (CYCLE.wasPressed()) {
 				if (System.currentTimeMillis() - lastPressed < TAB_DELAY) {
-					if (client.options.sneakKey.isPressed())
+					if (client.options.keySneak.isPressed())
 						InventorySwapper.swapToPrevLine();
 					else InventorySwapper.swapToNextLine();
 				}
@@ -47,8 +46,8 @@ public class TapTab implements ModInitializer {
 		public static SoundEvent SWAP_NEXT = new SoundEvent(new Identifier(ID, "swap_prev"));
 
 		static void register() {
-			Registry.register(Registries.SOUND_EVENT, SWAP_PREV.getId(), SWAP_PREV);
-			Registry.register(Registries.SOUND_EVENT, SWAP_NEXT.getId(), SWAP_NEXT);
+			Registry.register(Registry.SOUND_EVENT, SWAP_PREV.getId(), SWAP_PREV);
+			Registry.register(Registry.SOUND_EVENT, SWAP_NEXT.getId(), SWAP_NEXT);
 		}
 	}
 
