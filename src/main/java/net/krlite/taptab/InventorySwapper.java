@@ -1,11 +1,12 @@
 package net.krlite.taptab;
 
-import io.netty.buffer.Unpooled;
-import net.fabricmc.fabric.api.client.networking.v1.ClientPlayNetworking;
-import net.krlite.taptab.networking.TapTabNetworking;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.network.ClientPlayerEntity;
 import net.minecraft.client.sound.PositionedSoundInstance;
-import net.minecraft.network.PacketByteBuf;
+import net.minecraft.entity.player.PlayerInventory;
+import net.minecraft.item.ItemStack;
+import net.minecraft.server.integrated.IntegratedServer;
+import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.Range;
 
 import java.util.Arrays;
@@ -21,8 +22,36 @@ public class InventorySwapper {
 	}
 
 	protected static void swapSlot(@Range(from = 0, to = 35) int slot1, @Range(from = 0, to = 35) int slot2) {
-		if (slot1 == slot2 || MinecraftClient.getInstance().player == null) return;
-		ClientPlayNetworking.send(TapTabNetworking.PLAYER_INVENTORY_SWAP_SLOTS, new PacketByteBuf(Unpooled.buffer().writeInt(slot1).writeInt(slot2)));
+		IntegratedServer server = MinecraftClient.getInstance().getServer();
+		ClientPlayerEntity clientPlayer = MinecraftClient.getInstance().player;
+		if (server == null || clientPlayer == null) return;
+
+		ServerPlayerEntity player = server.getPlayerManager().getPlayer(clientPlayer.getUuid());
+		if (slot1 == slot2 || player == null) return;
+
+		ItemStack stack1 = player.getInventory().getStack(slot1), stack2 = player.getInventory().getStack(slot2);
+		if (stack1.isEmpty() && stack2.isEmpty() || stack1 == stack2) return;
+
+		PlayerInventory inv = player.getInventory();
+		inv.setStack(slot1, stack2);
+		inv.setStack(slot2, stack1);
+
+		if (slot1 < 9 && !stack2.isEmpty()) HOTBAR_SLOTS_ANIMATION_START[slot1] = getAnimationStart(inv, slot1);
+		if (slot2 < 9 && !stack1.isEmpty()) HOTBAR_SLOTS_ANIMATION_START[slot2] = getAnimationStart(inv, slot2);
+	}
+
+	private static long getAnimationStart(PlayerInventory inv, int slot) {
+		long start = 0;
+		if (inv.selectedSlot < slot) {
+			for (int i = inv.selectedSlot; i < slot; i++) {
+				if (!inv.getStack(i).isEmpty()) start++;
+			}
+		} else if (inv.selectedSlot > slot) {
+			for (int i = slot; i < inv.selectedSlot; i++) {
+				if (!inv.getStack(i).isEmpty()) start++;
+			}
+		}
+		return System.currentTimeMillis() + start * TapTab.ANIMATION_DELAY;
 	}
 
 	protected static void swapLine(@Range(from = 0, to = 3) int line1, @Range(from = 0, to = 3) int line2) {
@@ -35,7 +64,7 @@ public class InventorySwapper {
 
 	protected static void playSwapSound(boolean reversed) {
 		MinecraftClient.getInstance().getSoundManager()
-				.play(PositionedSoundInstance.master(reversed ? TapTabClient.Sounds.SWAP_PREV : TapTabClient.Sounds.SWAP_NEXT, 1.0F));
+				.play(PositionedSoundInstance.master(reversed ? TapTab.Sounds.SWAP_PREV : TapTab.Sounds.SWAP_NEXT, 1.0F));
 	}
 
 	public static void swapToNextLine() {
