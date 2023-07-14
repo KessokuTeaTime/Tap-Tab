@@ -54,7 +54,7 @@ public class InventorySwapper {
 		return System.currentTimeMillis() + start * TapTab.ANIMATION_DELAY;
 	}
 
-	protected static void swapLine(@Range(from = 0, to = 3) int line1, @Range(from = 0, to = 3) int line2) {
+	private static void swapLine(@Range(from = 0, to = 3) int line1, @Range(from = 0, to = 3) int line2) {
 		if (line1 == line2) return;
 		int slot1 = line1 * 9, slot2 = line2 * 9;
 		for (int i = 0; i < 9; i++) {
@@ -62,7 +62,7 @@ public class InventorySwapper {
 		}
 	}
 
-	protected static void playSwapSound(boolean reversed) {
+	private static void playSwapSound(boolean reversed) {
 		MinecraftClient.getInstance().getSoundManager()
 				.play(PositionedSoundInstance.master(reversed ? TapTab.Sounds.SWAP_PREV : TapTab.Sounds.SWAP_NEXT, 1.0F));
 	}
