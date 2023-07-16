@@ -2,4 +2,5 @@
 
 ### Tap Tab for `1.19.3`
 
-### `Notice:` This version of Tap Tab is outdated. Newer modifies will only be made to the latst few versions.
+> **Note**
+> This version of Tap Tab is outdated. Newer modifies will only be made to the latst few versions.
