@@ -12,4 +12,4 @@ Holding `⇧ Shift` while tapping `⇥ Tab` will cycle in another direction, whi
 
 ## License
 
-This repository is available under the **[GNU Public License.](LICENSE)**
+**Tap Tab is available under the **[GNU Public License.](LICENSE)**
