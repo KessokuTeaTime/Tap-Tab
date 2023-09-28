@@ -3,4 +3,4 @@
 ### Tap Tab for Fabric `1.19.3`
 
 > [!WARNING]
-> This version of **Tap Tab** is outdated. Newer modifies will only be made to the latst few versions.
+> This version of **Tap Tab** is outdated. Newer modifications will only be made to the latst few versions.
