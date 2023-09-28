@@ -1,6 +1,6 @@
 {
   "schemaVersion": 1,
-  "id": "taptab",
+  "id": "tap_tab",
   "version": "${version}",
 
   "name": "Tap Tab",
@@ -14,7 +14,7 @@
   },
 
   "license": "GPL-3.0",
-  "icon": "assets/taptab/icon.png",
+  "icon": "assets/tap_tab/icon.png",
 
   "environment": "client",
   "entrypoints": {
@@ -23,7 +23,7 @@
     ]
   },
   "mixins": [
-    "taptab.mixins.json"
+    "tap_tab.mixins.json"
   ],
 
   "depends": {

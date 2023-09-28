@@ -15,15 +15,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class TapTab implements ModInitializer {
-	public static final String NAME = "Tap Tab", ID = "taptab";
+	public static final String NAME = "Tap Tab", ID = "tap_tab";
 	public static final Logger LOGGER = LoggerFactory.getLogger(ID);
 	public static final int TAB_DELAY = 400, ANIMATION_DURATION = 375, ANIMATION_AMOUNT = 35, ANIMATION_DELAY = 15;
 
 	public static final KeyBinding CYCLE = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-			"key.taptab.cycle",
+			"key.tap_tab.cycle",
 			InputUtil.Type.KEYSYM,
 			GLFW.GLFW_KEY_TAB,
-			"key.taptab.category"
+			"key.tap_tab.category"
 	));
 
 	public static class Input {
@@ -31,12 +31,14 @@ public class TapTab implements ModInitializer {
 
 		static void listenInput(MinecraftClient client) {
 			if (client.player == null) return;
+
 			if (CYCLE.wasPressed()) {
 				if (System.currentTimeMillis() - lastPressed < TAB_DELAY) {
 					if (client.options.sneakKey.isPressed())
 						InventorySwapper.swapToPrevLine();
 					else InventorySwapper.swapToNextLine();
 				}
+
 				lastPressed = System.currentTimeMillis();
 			}
 		}
@@ -54,7 +56,7 @@ public class TapTab implements ModInitializer {
 
 	@Override
 	public void onInitialize() {
-		ClientTickEvents.END_CLIENT_TICK.register(Input::listenInput);
+		ClientTickEvents.START_CLIENT_TICK.register(Input::listenInput);
 		Sounds.register();
 	}
 
