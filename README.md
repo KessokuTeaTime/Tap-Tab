@@ -1,4 +1,4 @@
-### <p align=right>[`→` Modrinth](https://modrinth.com/mod/taptab)</p>
+### <p align=right>[`→` Modrinth](https://modrinth.com/mod/tap-tab)</p>
 
 # Tap Tab
 
