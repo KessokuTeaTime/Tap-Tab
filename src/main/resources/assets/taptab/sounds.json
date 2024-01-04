@@ -1,12 +1,12 @@
 {
   "swap_next": {
 	"sounds": [
-	  "tap_tab:swap_next"
+	  "taptab:swap_next"
 	]
   },
   "swap_prev": {
 	"sounds": [
-	  "tap_tab:swap_prev"
+	  "taptab:swap_prev"
 	]
   }
 }

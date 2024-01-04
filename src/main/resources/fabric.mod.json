@@ -1,20 +1,20 @@
 {
   "schemaVersion": 1,
-  "id": "tap_tab",
+  "id": "taptab",
   "version": "${version}",
 
   "name": "Tap Tab",
-  "description": "Double-Tap Tab and Cycle Your Hotbar Through Inventory!",
+  "description": "Double-Tap tab and cycle your hotbar through inventory!",
   "authors": [
     "KrLite"
   ],
   "contact": {
     "homepage": "https://github.com/KrLite",
-    "sources": "https://github.com/KrLite/Tap-Tab"
+    "sources": "https://github.com/KrLite/Mod.Tap-Tab"
   },
 
   "license": "GPL-3.0",
-  "icon": "assets/tap_tab/icon.png",
+  "icon": "assets/taptab/icon.png",
 
   "environment": "client",
   "entrypoints": {

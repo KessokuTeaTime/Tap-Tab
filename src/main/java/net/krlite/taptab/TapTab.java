@@ -15,15 +15,15 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class TapTab implements ModInitializer {
-	public static final String NAME = "Tap Tab", ID = "tap_tab";
+	public static final String NAME = "Tap Tab", ID = "taptab";
 	public static final Logger LOGGER = LoggerFactory.getLogger(ID);
 	public static final int TAB_DELAY = 400, ANIMATION_DURATION = 375, ANIMATION_AMOUNT = 35, ANIMATION_DELAY = 15;
 
 	public static final KeyBinding CYCLE = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-			"key.tap_tab.cycle",
+			"key.taptab.cycle",
 			InputUtil.Type.KEYSYM,
 			GLFW.GLFW_KEY_TAB,
-			"key.tap_tab.category"
+			"key.taptab.category"
 	));
 
 	public static class Input {
