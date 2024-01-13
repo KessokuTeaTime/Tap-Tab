@@ -1,4 +1,6 @@
 {
+	"modmenu.descriptionTranslation.taptab": "双击Tab以快速循环快捷栏物品！",
+
 	"key.taptab.category"        : "Tap Tab",
 
 	"key.taptab.cycle"           : "循环快捷栏到上方一行",
