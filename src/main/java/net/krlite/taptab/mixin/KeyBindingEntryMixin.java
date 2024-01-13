@@ -1,8 +1,8 @@
 package net.krlite.taptab.mixin;
 
 import net.krlite.taptab.TooltipKeyBinding;
-import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.screen.option.ControlsListWidget;
+import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.option.KeyBinding;
 import org.spongepowered.asm.mixin.Final;
@@ -16,17 +16,15 @@ public class KeyBindingEntryMixin {
     @Shadow @Final private KeyBinding binding;
 
     @Redirect(
-            method = "<init>",
+            method = "update",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/widget/ButtonWidget$Builder;build()Lnet/minecraft/client/gui/widget/ButtonWidget;"
+                    target = "Lnet/minecraft/client/gui/widget/ButtonWidget;setTooltip(Lnet/minecraft/client/gui/tooltip/Tooltip;)V"
             )
     )
-    private ButtonWidget appendTooltip(ButtonWidget.Builder builder) {
-        if (binding instanceof TooltipKeyBinding tooltipKeyBinding) {
-            builder.tooltip(tooltipKeyBinding.tooltipSupplier().get());
+    private void appendTooltip(ButtonWidget buttonWidget, Tooltip tooltip) {
+        if (binding instanceof TooltipKeyBinding tooltipKeyBinding && tooltip == null) {
+            buttonWidget.setTooltip(tooltipKeyBinding.tooltipSupplier().get());
         }
-
-        return builder.build();
     }
 }
