@@ -4,11 +4,13 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;
 import net.fabricmc.fabric.api.client.keybinding.v1.KeyBindingHelper;
 import net.minecraft.client.MinecraftClient;
+import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.option.KeyBinding;
 import net.minecraft.client.util.InputUtil;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.minecraft.sound.SoundEvent;
+import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import org.lwjgl.glfw.GLFW;
 import org.slf4j.Logger;
@@ -19,17 +21,19 @@ public class TapTab implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger(ID);
 	public static final int TAB_DELAY = 400, ANIMATION_DURATION = 375, ANIMATION_AMOUNT = 35, ANIMATION_DELAY = 15;
 
-	public static final KeyBinding CYCLE = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+	public static final KeyBinding CYCLE = KeyBindingHelper.registerKeyBinding(new TooltipKeyBinding(
 			"key." + ID + ".cycle",
 			InputUtil.Type.KEYSYM,
 			GLFW.GLFW_KEY_UNKNOWN,
-			"key." + ID + ".category"
+			"key." + ID + ".category",
+			() -> Tooltip.of(Text.of("test"))
 	));
-	public static final KeyBinding REVERSE_MODIFIER = KeyBindingHelper.registerKeyBinding(new KeyBinding(
+	public static final KeyBinding REVERSE_MODIFIER = KeyBindingHelper.registerKeyBinding(new TooltipKeyBinding(
 			"key." + ID + ".reverse_modifier",
 			InputUtil.Type.KEYSYM,
 			GLFW.GLFW_KEY_UNKNOWN,
-			"key." + ID + ".category"
+			"key." + ID + ".category",
+			() -> Tooltip.of(Text.of("test"))
 	));
 	public static final KeyBinding SLOT_MODIFIER = KeyBindingHelper.registerKeyBinding(new KeyBinding(
 			"key." + ID + ".slot_modifier",

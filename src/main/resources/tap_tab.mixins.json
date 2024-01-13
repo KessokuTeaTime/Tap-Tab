@@ -6,7 +6,8 @@
   "mixins": [
   ],
   "client": [
-    "InGameHudAnimator"
+    "InGameHudAnimator",
+    "KeyBindingEntryMixin"
   ],
   "injectors": {
     "defaultRequire": 0
