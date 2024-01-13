@@ -19,11 +19,12 @@ public class KeyBindingEntryMixin {
             method = "update",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/gui/widget/ButtonWidget;setTooltip(Lnet/minecraft/client/gui/tooltip/Tooltip;)V"
+                    target = "Lnet/minecraft/client/gui/widget/ButtonWidget;setTooltip(Lnet/minecraft/client/gui/tooltip/Tooltip;)V",
+                    ordinal = 1
             )
     )
     private void appendTooltip(ButtonWidget buttonWidget, Tooltip tooltip) {
-        if (binding instanceof TooltipKeyBinding tooltipKeyBinding && tooltip == null) {
+        if (binding instanceof TooltipKeyBinding tooltipKeyBinding) {
             buttonWidget.setTooltip(tooltipKeyBinding.tooltipSupplier().get());
         }
     }

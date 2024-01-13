@@ -1,6 +1,9 @@
 {
 	"key.taptab.category"        : "Tap Tab",
+
 	"key.taptab.cycle"           : "Cycle Hotbar to the Above Line",
-	"key.taptab.reverse_modifier": "Modifier: Cycle in Reverse Order",
-	"key.taptab.slot_modifier"   : "Modifier: Cycle Only Main Hand"
+	"key.taptab.reverse_modifier": "Holding: Cycle in Reverse Order",
+	"key.taptab.slot_modifier"   : "Holding: Cycle Only Main Hand",
+
+	"key.taptab.unbound.tooltip" : "§7Stay unbound to use key §r[%s]"
 }

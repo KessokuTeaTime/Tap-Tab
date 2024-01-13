@@ -26,14 +26,20 @@ public class TapTab implements ModInitializer {
 			InputUtil.Type.KEYSYM,
 			GLFW.GLFW_KEY_UNKNOWN,
 			"key." + ID + ".category",
-			() -> Tooltip.of(Text.of("test"))
+			() -> Tooltip.of(Text.translatable(
+					"key." + ID + ".unbound.tooltip",
+					Text.translatable(MinecraftClient.getInstance().options.playerListKey.getTranslationKey())
+			))
 	));
 	public static final KeyBinding REVERSE_MODIFIER = KeyBindingHelper.registerKeyBinding(new TooltipKeyBinding(
 			"key." + ID + ".reverse_modifier",
 			InputUtil.Type.KEYSYM,
 			GLFW.GLFW_KEY_UNKNOWN,
 			"key." + ID + ".category",
-			() -> Tooltip.of(Text.of("test"))
+			() -> Tooltip.of(Text.translatable(
+					"key." + ID + ".unbound.tooltip",
+					Text.translatable(MinecraftClient.getInstance().options.sneakKey.getTranslationKey())
+			))
 	));
 	public static final KeyBinding SLOT_MODIFIER = KeyBindingHelper.registerKeyBinding(new KeyBinding(
 			"key." + ID + ".slot_modifier",

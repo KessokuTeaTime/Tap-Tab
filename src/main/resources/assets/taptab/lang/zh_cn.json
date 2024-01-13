@@ -1,6 +1,9 @@
 {
 	"key.taptab.category"        : "Tap Tab",
+
 	"key.taptab.cycle"           : "循环快捷栏到上方一行",
-	"key.taptab.reverse_modifier": "修饰键：反方向循环",
-	"key.taptab.slot_modifier"   : "修饰键：只循环主手物品"
+	"key.taptab.reverse_modifier": "按住：反转循环方向",
+	"key.taptab.slot_modifier"   : "按住：只循环主手物品",
+
+	"key.taptab.unbound.tooltip" : "§7保持未绑定以使用按键 §r[%s]"
 }
