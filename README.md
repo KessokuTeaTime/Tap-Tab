@@ -12,6 +12,10 @@
 
 All the keys mentioned above can be configured in the `Key Binds` option page.
 
+## Demonstration
+
+https://github.com/KrLite/Mod.Tap-Tab/assets/68179735/c44bb12d-b457-48c0-8964-948729acc399
+
 ## License
 
 **Tap Tab** is licensed under the **[GNU General Public License v3.](LICENSE)**
