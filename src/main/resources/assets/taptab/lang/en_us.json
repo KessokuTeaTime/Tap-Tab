@@ -1,4 +1,6 @@
 {
-	"key.taptab.category": "Tap Tab",
-	"key.taptab.cycle"   : "Cycle Hotbar Through Inventory"
+	"key.taptab.category"        : "Tap Tab",
+	"key.taptab.cycle"           : "Cycle Hotbar to the Above Line",
+	"key.taptab.reverse_modifier": "Modifier: Cycle in Reverse Order",
+	"key.taptab.slot_modifier"   : "Modifier: Cycle Only Main Hand"
 }
