@@ -20,10 +20,10 @@ public class TapTab implements ModInitializer {
 	public static final int TAB_DELAY = 400, ANIMATION_DURATION = 375, ANIMATION_AMOUNT = 35, ANIMATION_DELAY = 15;
 
 	public static final KeyBinding CYCLE = KeyBindingHelper.registerKeyBinding(new KeyBinding(
-			"key.taptab.cycle",
+			"key." + ID + ".cycle",
 			InputUtil.Type.KEYSYM,
 			GLFW.GLFW_KEY_TAB,
-			"key.taptab.category"
+			"key." + ID + ".category"
 	));
 
 	public static class Input {
