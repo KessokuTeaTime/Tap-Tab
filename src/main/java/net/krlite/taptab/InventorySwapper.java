@@ -2,9 +2,13 @@ package net.krlite.taptab;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
+import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
+import net.minecraft.screen.slot.Slot;
+import net.minecraft.screen.slot.SlotActionType;
+import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.integrated.IntegratedServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.Range;
@@ -12,7 +16,7 @@ import org.jetbrains.annotations.Range;
 import java.util.Arrays;
 
 public class InventorySwapper {
-	public static final int HOTBAR = 0, TOP_LINE = 1, MIDDLE_LINE = 2, BOTTOM_LINE = 3;
+	public static final int TOP_LINE = 1, MIDDLE_LINE = 2, BOTTOM_LINE = 3;
 	public static final long[] HOTBAR_SLOTS_ANIMATION_START = new long[9];
 	public static final boolean[] HOTBAR_SLOTS_ANIMATION_REVERSED = new boolean[9];
 
@@ -37,36 +41,32 @@ public class InventorySwapper {
 		return System.currentTimeMillis() + start * TapTab.ANIMATION_DELAY;
 	}
 
-	private static void swapSlot(@Range(from = 0, to = 35) int slot1, @Range(from = 0, to = 35) int slot2) {
-		IntegratedServer server = MinecraftClient.getInstance().getServer();
-		ClientPlayerEntity clientPlayer = MinecraftClient.getInstance().player;
-		if (server == null || clientPlayer == null) return;
+	private static void swapSlotWithHotbar(@Range(from = 9, to = 35) int slot) {
+		ClientPlayerEntity player = MinecraftClient.getInstance().player;
+		if (player == null) return;
 
-		ServerPlayerEntity player = server.getPlayerManager().getPlayer(clientPlayer.getUuid());
-		if (slot1 == slot2 || player == null) return;
+		int hotbarSlot = slot % 9;
+		ItemStack hotbarStack = player.getInventory().getStack(hotbarSlot), stack = player.getInventory().getStack(slot);
+		if (hotbarStack.isEmpty() && stack.isEmpty()) return;
 
-		ItemStack stack1 = player.getInventory().getStack(slot1), stack2 = player.getInventory().getStack(slot2);
-		if (stack1.isEmpty() && stack2.isEmpty() || stack1 == stack2) return;
+		ClientPlayerInteractionManager interactionManager = MinecraftClient.getInstance().interactionManager;
+		if (interactionManager == null) return;
+
+		interactionManager.clickSlot(player.playerScreenHandler.syncId, slot, hotbarSlot, SlotActionType.SWAP, player);
 
 		PlayerInventory inv = player.getInventory();
-		inv.setStack(slot1, stack2);
-		inv.setStack(slot2, stack1);
-
-		if (slot1 < 9 && !stack2.isEmpty()) HOTBAR_SLOTS_ANIMATION_START[slot1] = getAnimationStart(inv, slot1);
-		if (slot2 < 9 && !stack1.isEmpty()) HOTBAR_SLOTS_ANIMATION_START[slot2] = getAnimationStart(inv, slot2);
+		if (!hotbarStack.isEmpty()) HOTBAR_SLOTS_ANIMATION_START[hotbarSlot] = getAnimationStart(inv, hotbarSlot);
 	}
 
-	private static void swapSlot(
+	private static void swapSlotWithHotbar(
 			@Range(from = 0, to = 8) int slot,
-			@Range(from = 0, to = 3) int line1, @Range(from = 0, to = 3) int line2
+			@Range(from = TOP_LINE, to = BOTTOM_LINE) int line
 	) {
-		if (line1 == line2) return;
-		swapSlot(slot + line1 * 9, slot + line2 * 9);
+		swapSlotWithHotbar(slot + line * 9);
 	}
 
-	private static void swapLine(@Range(from = 0, to = 3) int line1, @Range(from = 0, to = 3) int line2) {
-		if (line1 == line2) return;
-		for (int i = 0; i < 9; i++) swapSlot(i, line1, line2);
+	private static void swapLineWithHotbar(@Range(from = TOP_LINE, to = BOTTOM_LINE) int line) {
+		for (int i = 0; i < 9; i++) swapSlotWithHotbar(i, line);
 	}
 
 	private static void playSwapSound(boolean reversed) {
@@ -77,9 +77,9 @@ public class InventorySwapper {
 	public static void swapToNextLine() {
 		Arrays.fill(HOTBAR_SLOTS_ANIMATION_REVERSED, false);
 
-		swapLine(TOP_LINE, MIDDLE_LINE);
-		swapLine(TOP_LINE, BOTTOM_LINE);
-		swapLine(TOP_LINE, HOTBAR);
+		swapLineWithHotbar(TOP_LINE);
+		swapLineWithHotbar(MIDDLE_LINE);
+		swapLineWithHotbar(BOTTOM_LINE);
 
 		playSwapSound(false);
 	}
@@ -87,9 +87,9 @@ public class InventorySwapper {
 	public static void swapToPrevLine() {
 		Arrays.fill(HOTBAR_SLOTS_ANIMATION_REVERSED, true);
 
-		swapLine(HOTBAR, BOTTOM_LINE);
-		swapLine(HOTBAR, MIDDLE_LINE);
-		swapLine(HOTBAR, TOP_LINE);
+		swapLineWithHotbar(BOTTOM_LINE);
+		swapLineWithHotbar(MIDDLE_LINE);
+		swapLineWithHotbar(TOP_LINE);
 
 		playSwapSound(true);
 	}
@@ -97,9 +97,9 @@ public class InventorySwapper {
 	public static void swapSlotToNextLine(@Range(from = 0, to = 8) int slot) {
 		HOTBAR_SLOTS_ANIMATION_REVERSED[slot] = false;
 
-		swapSlot(slot, TOP_LINE, MIDDLE_LINE);
-		swapSlot(slot, TOP_LINE, BOTTOM_LINE);
-		swapSlot(slot, TOP_LINE, HOTBAR);
+		swapSlotWithHotbar(slot, TOP_LINE);
+		swapSlotWithHotbar(slot, MIDDLE_LINE);
+		swapSlotWithHotbar(slot, BOTTOM_LINE);
 
 		playSwapSound(false);
 	}
@@ -107,9 +107,9 @@ public class InventorySwapper {
 	public static void swapSlotToPrevLine(@Range(from = 0, to = 8) int slot) {
 		HOTBAR_SLOTS_ANIMATION_REVERSED[slot] = true;
 
-		swapSlot(slot, HOTBAR, BOTTOM_LINE);
-		swapSlot(slot, HOTBAR, MIDDLE_LINE);
-		swapSlot(slot, HOTBAR, TOP_LINE);
+		swapSlotWithHotbar(slot, BOTTOM_LINE);
+		swapSlotWithHotbar(slot, MIDDLE_LINE);
+		swapSlotWithHotbar(slot, TOP_LINE);
 
 		playSwapSound(true);
 	}
