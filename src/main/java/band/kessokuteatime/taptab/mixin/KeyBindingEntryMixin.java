@@ -1,6 +1,6 @@
-package net.krlite.taptab.mixin;
+package band.kessokuteatime.taptab.mixin;
 
-import net.krlite.taptab.TooltipKeyBinding;
+import band.kessokuteatime.taptab.TooltipKeyBinding;
 import net.minecraft.client.gui.screen.option.ControlsListWidget;
 import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.option.KeyBinding;

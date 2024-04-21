@@ -3,15 +3,16 @@
   "id": "taptab",
   "version": "${version}",
 
-  "name": "Tap Tab",
+  "name": "${display.name}",
   "description": "Double-tap tab and cycle your hotbar through inventory!",
   "authors": [
+    "Kessoku Tea Time",
     "KrLite"
   ],
   "contact": {
     "homepage": "https://modrinth.com/mod/tap-tab",
-    "sources": "https://github.com/KrLite/Mod.Tap-Tab",
-    "issues": "https://github.com/KrLite/Mod.Tap-Tab/issues"
+    "sources": "https://github.com/KessokuTeaTime/Tap-Tab",
+    "issues": "https://github.com/KessokuTeaTime/Tap-Tab/issues"
   },
 
   "license": "GPL-3.0",
@@ -20,11 +21,11 @@
   "environment": "client",
   "entrypoints": {
     "main": [
-      "net.krlite.taptab.TapTab"
+      "band.kessokuteatime.taptab.TapTab"
     ]
   },
   "mixins": [
-    "tap_tab.mixins.json"
+    "taptab.mixins.json"
   ],
 
   "depends": {

@@ -1,7 +1,7 @@
-package net.krlite.taptab.mixin;
+package band.kessokuteatime.taptab.mixin;
 
-import net.krlite.taptab.InventorySwapper;
-import net.krlite.taptab.TapTab;
+import band.kessokuteatime.taptab.InventorySwapper;
+import band.kessokuteatime.taptab.TapTab;
 import net.minecraft.client.gui.hud.InGameHud;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;

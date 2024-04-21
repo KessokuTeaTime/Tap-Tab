@@ -1,4 +1,4 @@
-package net.krlite.taptab;
+package band.kessokuteatime.taptab;
 
 import net.minecraft.client.gui.tooltip.Tooltip;
 import net.minecraft.client.option.KeyBinding;

@@ -1,4 +1,4 @@
-package net.krlite.taptab;
+package band.kessokuteatime.taptab;
 
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.event.lifecycle.v1.ClientTickEvents;

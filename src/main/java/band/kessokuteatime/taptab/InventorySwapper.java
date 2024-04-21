@@ -1,4 +1,4 @@
-package net.krlite.taptab;
+package band.kessokuteatime.taptab;
 
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.network.ClientPlayerEntity;
@@ -6,11 +6,7 @@ import net.minecraft.client.network.ClientPlayerInteractionManager;
 import net.minecraft.client.sound.PositionedSoundInstance;
 import net.minecraft.entity.player.PlayerInventory;
 import net.minecraft.item.ItemStack;
-import net.minecraft.screen.slot.Slot;
 import net.minecraft.screen.slot.SlotActionType;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.integrated.IntegratedServer;
-import net.minecraft.server.network.ServerPlayerEntity;
 import org.jetbrains.annotations.Range;
 
 import java.util.Arrays;
