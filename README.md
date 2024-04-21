@@ -1,4 +1,4 @@
-### <p align=right>[`→` Modrinth](https://modrinth.com/mod/tap-tab)</p>
+### <p align=right>[`→` CurseForge](https://www.curseforge.com/minecraft/mc-mods/tap-tab)&ensp;[`→` Modrinth](https://modrinth.com/mod/tap-tab)</p>
 
 # Tap Tab
 
@@ -14,7 +14,7 @@ All the keys mentioned above can be configured in the `Key Binds` option page.
 
 ## Demonstration
 
-https://github.com/KrLite/Mod.Tap-Tab/assets/68179735/c44bb12d-b457-48c0-8964-948729acc399
+https://github.com/KessokuTeaTime/Tap-Tab/assets/68179735/c44bb12d-b457-48c0-8964-948729acc399
 
 ## License
 
