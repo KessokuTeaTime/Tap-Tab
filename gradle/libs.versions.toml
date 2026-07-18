@@ -1,34 +1,37 @@
 [versions]
 maven-group = "band.kessokuteatime"
 archives-name = "taptab"
-mod = "3.3.0"
-loader = "fabric"
+mod = "3.3.1"
 
-minecraft = "1.20"
-yarn = "1.20+build.1"
-fabric-loader = "0.15.10"
-fabric-api = "0.83.0+1.20"
-fabric-loom = "1.6-SNAPSHOT"
-modpublisher = "2.1.0"
+minecraft = "26.2"
+java = "25"
 
-# id
+architectury-plugin = "3.5.169"
+architectury-loom = "1.17.491"
+shadow = "9.6.0"
+modpublisher = "2.2.1"
+
+fabric-loader = "0.19.3"
+fabric-api = "0.155.2+26.2"
+fabric-minecraft-range = "~26.2"
+javafml = "3"
+neoforge = "26.2.0.25-beta"
+neoforge-range = "[26.2.0.25-beta,)"
+neoforge-minecraft-range = "[26.2,26.3)"
+
 id-modrinth = "PZiy3tTe"
 id-curseforge = "844467"
 
-# display
 display-name = "Tap Tab"
-display-loader = "Fabric"
-display-version = "1.20.x"
 
 [libraries]
 minecraft = { group = "com.mojang", name = "minecraft", version.ref = "minecraft" }
-yarn = { group = "net.fabricmc", name = "yarn", version.ref = "yarn" }
 fabric-loader = { group = "net.fabricmc", name = "fabric-loader", version.ref = "fabric-loader" }
 fabric-api = { group = "net.fabricmc.fabric-api", name = "fabric-api", version.ref = "fabric-api" }
+neoforge = { group = "net.neoforged", name = "neoforge", version.ref = "neoforge" }
 
 [plugins]
-fabric-loom = { id = "fabric-loom", version.ref = "fabric-loom" }
+architectury = { id = "architectury-plugin", version.ref = "architectury-plugin" }
+architectury-loom = { id = "dev.architectury.loom-no-remap", version.ref = "architectury-loom" }
+shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
 modpublisher = { id = "com.hypherionmc.modutils.modpublisher", version.ref = "modpublisher" }
-
-[bundles]
-fabric = ["fabric-loader", "fabric-api"]

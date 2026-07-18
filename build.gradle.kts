@@ -1,101 +1,100 @@
-class Display {
-	lateinit var name: String
-	lateinit var loader: String
-	lateinit var version: String
-}
-
-var display: Display = Display()
+import net.fabricmc.loom.api.LoomGradleExtensionAPI
+import org.gradle.api.plugins.BasePluginExtension
+import org.gradle.api.plugins.JavaPluginExtension
+import org.gradle.api.tasks.bundling.Jar
+import org.gradle.language.jvm.tasks.ProcessResources
 
 plugins {
 	base
-	java
-	idea
-	`maven-publish`
-	alias(libs.plugins.fabric.loom)
-	alias(libs.plugins.modpublisher)
+	alias(libs.plugins.architectury)
+	alias(libs.plugins.architectury.loom) apply false
+	alias(libs.plugins.shadow) apply false
+	alias(libs.plugins.modpublisher) apply false
 }
+
+val rootLibs = libs
+val modId = libs.versions.archives.name.get()
+val modVersion = libs.versions.mod.get()
+val minecraftVersion = libs.versions.minecraft.get()
+val javaVersion = libs.versions.java.get().toInt()
 
 group = libs.versions.maven.group.get()
-version = "${libs.versions.mod.get()}-${libs.versions.loader.get()}${libs.versions.minecraft.get()}"
-
-display.name = libs.versions.display.name.get()
-display.loader = libs.versions.display.loader.get()
-display.version = libs.versions.display.version.get()
+version = modVersion
 
 base {
-	archivesName.set(libs.versions.archives.name)
+	archivesName.set(modId)
 }
 
-repositories {
-	mavenCentral()
+architectury {
+	minecraft = minecraftVersion
 }
 
-dependencies {
-	minecraft(libs.minecraft)
-	mappings(libs.yarn)
-	modImplementation(libs.bundles.fabric)
-}
+subprojects {
+	apply(plugin = "java-library")
+	apply(plugin = "maven-publish")
+	apply(plugin = "architectury-plugin")
+	apply(plugin = "dev.architectury.loom-no-remap")
 
-java {
-	sourceCompatibility = JavaVersion.VERSION_17
-	targetCompatibility = JavaVersion.VERSION_17
+	group = rootProject.group
+	version = "$modVersion-${project.name}.$minecraftVersion"
 
-	withSourcesJar()
-}
-
-tasks {
-	processResources {
-		filesMatching("fabric.mod.json") {
-			expand(mapOf(
-					"version" to libs.versions.mod.get(),
-					"display" to display
-			))
-		}
-	}
-
-	jar {
-		from("LICENSE")
-	}
-}
-
-publishing {
-	publications {
-		create<MavenPublication>("mavenJava") {
-			from(components["java"])
-		}
+	extensions.configure<BasePluginExtension> {
+		archivesName.set(modId)
 	}
 
 	repositories {
+		mavenCentral()
+	}
+
+	extensions.configure<LoomGradleExtensionAPI> {
+		noIntermediateMappings()
+	}
+
+	dependencies {
+		add("minecraft", rootLibs.minecraft)
+	}
+
+	extensions.configure<JavaPluginExtension> {
+		toolchain.languageVersion.set(JavaLanguageVersion.of(javaVersion))
+		withSourcesJar()
+	}
+
+	tasks.withType<JavaCompile>().configureEach {
+		options.encoding = "UTF-8"
+		options.release.set(javaVersion)
+	}
+
+	tasks.withType<ProcessResources>().configureEach {
+		val properties = mapOf(
+			"version" to modVersion,
+			"displayName" to rootLibs.versions.display.name.get(),
+			"javaVersion" to javaVersion,
+			"minecraftVersion" to minecraftVersion,
+			"fabricMinecraftVersionRange" to rootLibs.versions.fabric.minecraft.range.get(),
+			"fabricLoaderVersion" to rootLibs.versions.fabric.loader.get(),
+			"fabricApiVersion" to rootLibs.versions.fabric.api.get(),
+			"javaFmlVersionRange" to "[${rootLibs.versions.javafml.get()},)",
+			"neoforgeVersionRange" to rootLibs.versions.neoforge.range.get(),
+			"neoforgeMinecraftVersionRange" to rootLibs.versions.neoforge.minecraft.range.get()
+		)
+
+		inputs.properties(properties)
+		filesMatching(listOf("fabric.mod.json", "META-INF/neoforge.mods.toml")) {
+			expand(properties)
+		}
+	}
+
+	tasks.named<Jar>("jar") {
+		from(rootProject.file("LICENSE"))
 	}
 }
 
-publisher {
-	apiKeys {
-		modrinth(System.getenv("MODRINTH_TOKEN"))
-		curseforge(System.getenv("CURSEFORGE_TOKEN"))
-	}
+tasks.named("build") {
+	dependsOn(subprojects.map { "${it.path}:build" })
+}
 
-	modrinthID.set(libs.versions.id.modrinth)
-	curseID.set(libs.versions.id.curseforge)
-
-	versionType.set("release")
-	projectVersion.set(project.version.toString())
-	gameVersions.set(listOf("1.20", "1.20.1", "1.20.2", "1.20.3", "1.20.4"))
-	loaders.set(listOf("fabric", "quilt"))
-	curseEnvironment.set("client")
-
-	modrinthDepends.required("fabric-api")
-	modrinthDepends.optional()
-	modrinthDepends.embedded()
-
-	curseDepends.required("fabric-api")
-	curseDepends.optional()
-	curseDepends.embedded()
-
-	displayName.set("${display.name} ${libs.versions.mod.get()} for ${display.loader} ${display.version}")
-
-	artifact.set(tasks.remapJar)
-	addAdditionalFile(tasks.remapSourcesJar)
-
-	changelog.set(file("CHANGELOG.md"))
+tasks.register("publishMod") {
+	group = "publishing"
+	description = "Publishes the Fabric and NeoForge artifacts."
+	dependsOn(":fabric:publishMod", ":neoforge:publishMod")
 }

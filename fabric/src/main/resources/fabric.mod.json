@@ -1,0 +1,33 @@
+{
+  "schemaVersion": 1,
+  "id": "taptab",
+  "version": "${version}",
+  "name": "${displayName}",
+  "description": "Double-tap Tab to cycle the hotbar through the inventory.",
+  "authors": [
+    "Kessoku Tea Time",
+    "KrLite"
+  ],
+  "contact": {
+    "homepage": "https://modrinth.com/mod/tap-tab",
+    "sources": "https://github.com/KessokuTeaTime/Tap-Tab",
+    "issues": "https://github.com/KessokuTeaTime/Tap-Tab/issues"
+  },
+  "license": "GPL-3.0-only",
+  "icon": "assets/taptab/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "band.kessokuteatime.taptab.fabric.TapTabFabric"
+    ]
+  },
+  "mixins": [
+    "taptab.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${fabricLoaderVersion}",
+    "fabric-api": ">=${fabricApiVersion}",
+    "minecraft": "${fabricMinecraftVersionRange}",
+    "java": ">=${javaVersion}"
+  }
+}

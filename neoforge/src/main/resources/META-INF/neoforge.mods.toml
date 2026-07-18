@@ -1,0 +1,33 @@
+modLoader = "javafml"
+loaderVersion = "${javaFmlVersionRange}"
+license = "GPL-3.0-only"
+issueTrackerURL = "https://github.com/KessokuTeaTime/Tap-Tab/issues"
+
+[[mods]]
+modId = "taptab"
+version = "${version}"
+displayName = "${displayName}"
+displayURL = "https://modrinth.com/mod/tap-tab"
+logoFile = "assets/taptab/icon.png"
+authors = "Kessoku Tea Time, KrLite"
+description = "Double-tap Tab to cycle the hotbar through the inventory."
+
+[features.taptab]
+javaVersion = "[${javaVersion},)"
+
+[[dependencies.taptab]]
+modId = "neoforge"
+type = "required"
+versionRange = "${neoforgeVersionRange}"
+ordering = "NONE"
+side = "CLIENT"
+
+[[dependencies.taptab]]
+modId = "minecraft"
+type = "required"
+versionRange = "${neoforgeMinecraftVersionRange}"
+ordering = "NONE"
+side = "CLIENT"
+
+[[mixins]]
+config = "taptab.mixins.json"

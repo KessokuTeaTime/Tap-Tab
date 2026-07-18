@@ -12,6 +12,10 @@
 
 All the keys mentioned above can be configured in the `Key Binds` option page.
 
+## Compatibility
+
+**Tap Tab** supports Minecraft 26.2 on Fabric and NeoForge and requires Java 25. Fabric installations also require Fabric API.
+
 ## Demonstration
 
 https://github.com/KessokuTeaTime/Tap-Tab/assets/68179735/c44bb12d-b457-48c0-8964-948729acc399
